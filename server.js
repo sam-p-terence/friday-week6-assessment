@@ -99,6 +99,30 @@ app.get('/api/player', (req, res) => {
     }
 })
 
+try {
+    nonExistentFunction();
+  } catch (error) {
+    rollbar.log('Catch Try Error')
+  }
+
+try {
+    nonExistentFunction2();
+  } catch (error) {
+    rollbar.warning('Warning Warning Warning')
+  }
+
+try {
+    nonExistentFunction3();
+  } catch (error) {
+    rollbar.error('Error Error Error')
+  }
+
+try {
+    nonExistentFunction4();
+  } catch (error) {
+    rollbar.critical('Explosion Error')
+  }
+
 const port = process.env.PORT || 3000
 
 app.listen(port, () => {
