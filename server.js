@@ -1,10 +1,28 @@
 const express = require('express')
+const res = require('express/lib/response')
 const path = require('path')
 const app = express()
 const {bots, playerRecord} = require('./data')
 const {shuffleArray} = require('./utils')
 
 app.use(express.json())
+
+////
+
+// include and initialize the rollbar library with your access token
+var Rollbar = require("rollbar");
+var rollbar = new Rollbar({
+  accessToken: '74e523aec29248c1aab2ea74eddcf50b',
+  captureUncaught: true,
+  captureUnhandledRejections: true
+});
+
+// record a generic message and send it to Rollbar
+rollbar.log("Hello world!");
+
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, './public/index.html'))
+// })
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'))
@@ -17,6 +35,8 @@ app.get('/css', (req, res) => {
 app.get('/js', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.js'))
 })
+
+////
 
 app.get('/api/robots', (req, res) => {
     try {
@@ -61,7 +81,7 @@ app.post('/api/duel', (req, res) => {
             playerRecord.losses++
             res.status(200).send('You lost!')
         } else {
-            playerRecord.losses++
+            playerRecord.wins++
             res.status(200).send('You won!')
         }
     } catch (error) {
