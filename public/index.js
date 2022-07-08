@@ -167,7 +167,7 @@ const getPlayerStats = () => {
 
 const getAllBots = () => {
     axios.get('/api/robots')
-        .then(({data}) => {
+        .then(({data: {getAllBots}}) => {
             allBotsDiv.innerHTML = ''
         
             data.forEach(bot => {
